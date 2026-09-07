@@ -3,30 +3,172 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thai-Lang — ม็อดแปลไทย</title>
+<title>MODGAMEAIGAME</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chonburi&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg: #101B15;
-    --bg-2: #0C140F;
-    --panel: #1A2820;
-    --panel-2: #20302680;
-    --line: #33473A;
-    --line-soft: #2A3B31;
-    --ink: #ECE6D6;
-    --muted: #90A797;
-    --muted-2: #63776A;
-    --blaze: #E1652C;
-    --blaze-dim: #E1652C33;
-    --moss: #86AE68;
-    --moss-dim: #86AE6822;
-    --amber: #D9A441;
-    --amber-dim: #D9A44133;
-    --radius: 14px;
-    --radius-sm: 8px;
-  }
+:root {
+  --line: #33473A;
+  --line-soft: #2A3B31;
+  --ink: #ECE6D6;
+  --muted: #90A797;
+  --muted-2: #63776A;
+  --blaze: #E1652C;
+  --blaze-dim: #E1652C33;
+  --moss: #86AE68;
+  --moss-dim: #86AE6822;
+  --amber: #D9A441;
+  --amber-dim: #D9A44133;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --danger: #e64545;
+  --danger-dim: #e6454522;
+}
+
+* { box-sizing: border-box; }
+
+/* ---------- พื้นหลังหลัก ---------- */
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #101B15;
+  color: var(--ink);
+  font-family: 'IBM Plex Sans Thai', 'IBM Plex Sans', system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+/* เลเยอร์รูปภาพพื้นหลัง + เอฟเฟกต์เคลื่อนไหว */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -5%;
+  z-index: -2;
+  /* ใช้ URL รูปภาพ (JPG/PNG/WEBP) เท่านั้น */
+  background-image: 
+
+	
+    radial-gradient(circle at 50% 50%, rgba(16, 27, 21, 0.75) 0%, rgba(12, 20, 15, 0.95) 100%),
+    linear-gradient(to bottom, rgba(16, 27, 21, 0.5), rgba(12, 20, 15, 0.5)),
+    url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOW5zcWN6d3N1NTZiMm1yMXNmajMzZjljdm9sajhrN2p0NW9mNDM3ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/wIT0tVg65MNFII7dWI/giphy.gif'); /* 👈 เปลี่ยนเป็น URL รูปภาพของคุณ */
+  background-size: cover;
+  background-position: center;
+  animation: bgPulseZoom 20s ease-in-out infinite alternate;
+}
+
+/* เลเยอร์แสง HUD เรืองแสง */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: 
+    radial-gradient(circle at 20% 20%, var(--blaze-dim) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, var(--moss-dim) 0%, transparent 40%);
+  animation: glowShift 10s ease-in-out infinite alternate;
+}
+/* เอฟเฟกต์ใหม่: ดาวกระพริบวิบวับ */
+@keyframes starTwinkle {
+  0% { opacity: 0.65; }
+  50% { opacity: 1; }
+  100% { opacity: 0.75; }
+}
+@keyframes bgPulseZoom {
+  0% { transform: scale(1) rotate(0deg); }
+  100% { transform: scale(1.08) rotate(0.5deg); }
+}
+
+@keyframes glowShift {
+  0% { opacity: 0.5; transform: translateY(0px); }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.5; transform: translateY(-20px); }
+}
+/* Container และหัวข้อ */
+.checker-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.checker-title {
+  color: rgb(236, 230, 214);
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(42, 61, 49, 0.8);
+  padding-bottom: 0.5rem;
+}
+
+/* รายการแต่ละแถว (Row) */
+.checker-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checker-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: rgba(20, 34, 26, 0.6);
+  border: 1px solid rgba(42, 61, 49, 0.8);
+  border-radius: var(--radius-sm, 8px);
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+.checker-item:hover {
+  border-color: rgba(134, 174, 104, 0.5);
+  background: rgba(20, 34, 26, 0.85);
+}
+
+/* ฝั่งซ้าย: รูปภาพ/ไอคอน + ชื่อ */
+.checker-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* รูปภาพหรือไอคอนเกม */
+.checker-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: rgba(8, 13, 9, 0.8);
+  border: 1px solid rgba(144, 167, 151, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: rgb(134, 174, 104);
+}
+
+/* ชื่อเกมและชื่อม็อด */
+.checker-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.checker-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: rgb(236, 230, 214);
+}
+
+.checker-eng {
+  font-size: 0.8rem;
+  color: rgb(144, 167, 151);
+}
+
+/* ฝั่งขวา: สถานะและเวอร์ชัน */
+.checker-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
   * { box-sizing: border-box; }
 
@@ -656,12 +798,13 @@
     font-family: 'IBM Plex Sans Thai'; font-weight: 600; font-size: 17px; margin: 2px 0 0; color: var(--ink);
   }
   .game-badge {
-    font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.06em;
+    font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.05em;
     padding: 3px 9px; border-radius: 999px; white-space: nowrap; flex-shrink: 0;
     border: 1px solid var(--line-soft);
   }
   .game-badge.released { color: var(--moss); border-color: var(--moss-dim); background: var(--moss-dim); }
   .game-badge.in-progress { color: var(--amber); border-color: var(--amber-dim); background: var(--amber-dim); }
+  .game-badge.not-working {color: var(--danger);border-color: var(--danger-dim);background: var(--danger-dim);}
   .game-card p.note { color: var(--muted); font-size: 13px; line-height: 1.6; margin: 0; flex: 1; }
   .game-stats {
     display: flex; gap: 14px; flex-wrap: wrap;
@@ -673,6 +816,7 @@
   .game-status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 6px; }
   .game-status-dot.released { background: var(--moss); }
   .game-status-dot.in-progress { background: var(--amber); }
+  .game-status-dot.not-working {background: var(--danger);box-shadow: 0 0 6px var(--danger);}
   .home-empty { padding: 40px 0; color: var(--muted); font-size: 13.5px; text-align: center; }
 </style>
 </head>
@@ -682,14 +826,12 @@
 <div class="wrap">
 
   <header>
-    <div class="eyebrow">THAI-LANG · MOD LOCALIZATION</div>
-    <h1>Thai-Lang</h1>
-    <p class="sub">ม็อดแปลไทย แจกฟรี — รวมโปรเจกต์และเครื่องมือเช็คสถานะแปลไว้ในที่เดียว</p>
-    <div class="coords">N 13°45' E 100°30'<br>REC. UNIT — TH LOC</div>
+    <h1>AI-FREE</h1>
+    <!--<p class="sub">ม็อดแปลไทย แจกฟรี — รวมโปรเจกต์และเครื่องมือเช็คสถานะแปลไว้ในที่เดียว</p>--!>
     <div class="nav-tabs">
       <button class="btn tab active" id="tabHome" type="button">โปรเจกต์ทั้งหมด</button>
-      <button class="btn tab" id="tabChecker" type="button">เครื่องมือเช็คสถานะแปล</button>
-      <a class="btn" href="https://discord.gg/5U4xm3hmmk" target="_blank" rel="noopener" style="margin-left:auto;">เข้าดิสคอร์ด</a>
+      <button class="btn tab" id="tabChecker" type="button">เช็คสถานะ</button>
+     <!-- <a class="btn" href="https://discord.gg/5U4xm3hmmk" target="_blank" rel="noopener" style="margin-left:auto;">เข้าดิสคอร์ด</a>--!>
     </div>
   </header>
 
@@ -698,649 +840,80 @@
     <div class="game-grid" id="gameGrid"></div>
     <div class="home-empty" id="homeEmpty" style="display:none;"></div>
     <div class="field-note">
-      <b>บันทึกภาคสนาม —</b> สถานะ "ปล่อยแล้ว" หมายถึงมีไฟล์ให้โหลดแล้วอย่างน้อย 1 เวอร์ชัน ส่วน "กำลังทำ" คือยังอยู่ระหว่างแปล/แก้ปัญหาทางเทคนิค ติดตามความคืบหน้าแบบเรียลไทม์ได้ในดิสคอร์ด
+      <b>สถานะ —</b>
+	  🟢ปกติ  
+	  🟠กําลังอัปเดต~เเก้ไข  
+	  🔴ใช้งานไม่ได้
     </div>
   </div>
-
-  <div class="view" id="view-checker">
-
-  <div class="sys-status" id="sysStatus" style="margin-bottom:20px;">
-    <span class="status-dot" id="statusDot"></span>
-    <span id="sysStatusText">SYSTEM READY — รอไฟล์นำเข้า</span>
+<div class="view" id="view-checker">
+  <div class="checker-container">
+    <h2 class="checker-title">รายการเช็คสถานะ(Status Checker)</h2>
+    
+    <div class="checker-list" id="checkerList">
+      <!-- แสดงผลรายการม็อดผ่าน JavaScript -->
+    </div>
   </div>
-
-  <div id="dropSection">
-    <div class="dropzone hud-frame" id="dropzone" tabindex="0" role="button" aria-label="ลากไฟล์มาวาง หรือกดเพื่อเลือกไฟล์">
-      <svg class="dz-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4">
-        <path d="M24 6 L24 30 M24 6 L15 15 M24 6 L33 15" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M8 30 L8 38 A2 2 0 0 0 10 40 L38 40 A2 2 0 0 0 40 38 L40 30" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <h2>ลากไฟล์ .txt หรือ .csv มาวางตรงนี้</h2>
-      <p>รองรับหลายไฟล์พร้อมกัน — ไฟล์จะถูกอ่านในเครื่องของคุณเท่านั้น ไม่มีการอัปโหลดที่ไหน</p>
-      <div class="dz-buttons">
-        <button class="btn primary" id="pickFilesBtn" type="button">เลือกไฟล์</button>
-        <button class="btn" id="pickFolderBtn" type="button">เลือกทั้งโฟลเดอร์</button>
-      </div>
-      <input type="file" id="fileInput" multiple accept=".txt,.csv">
-      <input type="file" id="folderInput" webkitdirectory directory multiple>
-    </div>
-    <div class="err-msg" id="errMsg"></div>
-  </div>
-
-  <div id="dashboard">
-
-    <div class="grid-top">
-      <div class="gauge-card hud-frame">
-        <div class="gauge-label">ความคืบหน้ารวม</div>
-        <svg id="gaugeSvg" width="200" height="200" viewBox="0 0 200 200"></svg>
-        <div class="gauge-frac"><b id="gaugeDone">0</b> / <span id="gaugeTotal">0</span></div>
-      </div>
-
-      <div>
-        <div class="stat-row">
-          <div class="stat-card total">
-            <div class="num" id="statTotal">0</div>
-            <div class="lbl">ข้อความทั้งหมด</div>
-          </div>
-          <div class="stat-card done">
-            <div class="num" id="statDone">0</div>
-            <div class="lbl">แปลแล้ว</div>
-          </div>
-          <div class="stat-card partial">
-            <div class="num" id="statPartial">0</div>
-            <div class="lbl">แปลบางส่วน</div>
-          </div>
-          <div class="stat-card todo">
-            <div class="num" id="statTodo">0</div>
-            <div class="lbl">ยังไม่แปล</div>
-          </div>
-        </div>
-
-        <div class="cat-row" id="catRow">
-          <div class="cat-card dialogue">
-            <div class="cat-lbl">บทพูด</div>
-            <div class="cat-num"><span id="catDialogueTodo">0</span><span class="cat-of"> / <span id="catDialogueTotal">0</span></span></div>
-          </div>
-          <div class="cat-card ui">
-            <div class="cat-lbl">UI</div>
-            <div class="cat-num"><span id="catUiTodo">0</span><span class="cat-of"> / <span id="catUiTotal">0</span></span></div>
-          </div>
-          <div class="cat-card other">
-            <div class="cat-lbl">อื่นๆ</div>
-            <div class="cat-num"><span id="catOtherTodo">0</span><span class="cat-of"> / <span id="catOtherTotal">0</span></span></div>
-          </div>
-        </div>
-
-        <div class="file-list" id="fileList"></div>
-
-        <div style="margin-top:14px;">
-          <button class="btn ghost" id="addMoreBtn" type="button">+ เพิ่มไฟล์อื่น</button>
-          <button class="btn ghost" id="resetBtn" type="button">เริ่มใหม่</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="table-card hud-frame">
-      <div class="table-head">
-        <h3>รายการที่ต้องตรวจ</h3>
-        <span class="count-pill" id="tableCount">0 รายการ</span>
-        <div class="filter-groups">
-          <div class="filter-group">
-            <span class="filter-label">ประเภท</span>
-            <div class="cat-filter" id="catFilter">
-              <button class="cat-pill active" data-cat="">ทั้งหมด</button>
-              <button class="cat-pill" data-cat="dialogue">บทพูด</button>
-              <button class="cat-pill" data-cat="ui">UI</button>
-              <button class="cat-pill" data-cat="other">อื่นๆ</button>
-            </div>
-          </div>
-          <div class="filter-group">
-            <span class="filter-label">สถานะ</span>
-            <div class="cat-filter" id="statusFilterBtns">
-              <button class="cat-pill active" data-status="">ทั้งหมด</button>
-              <button class="cat-pill" data-status="untranslated">ยังไม่แปล</button>
-              <button class="cat-pill" data-status="partial">แปลบางส่วน</button>
-            </div>
-          </div>
-        </div>
-        <div class="search-box">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/></svg>
-          <input type="text" id="searchInput" placeholder="ค้นหาข้อความหรือ ID...">
-        </div>
-        <button class="btn ghost" id="exportBtn" type="button">ดาวน์โหลด CSV</button>
-      </div>
-      <div id="tableWrap">
-        <table>
-          <thead>
-            <tr>
-              <th style="width:1%">ID / บรรทัด</th>
-              <th id="fileColHead" style="width:1%; display:none;">ไฟล์</th>
-              <th style="width:1%">สถานะ / ประเภท</th>
-              <th>ข้อความต้นฉบับ</th>
-            </tr>
-          </thead>
-          <tbody id="tableBody"></tbody>
-        </table>
-      </div>
-      <div class="table-foot">
-        <span id="pageInfo" style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted);"></span>
-        <div class="page-controls">
-          <button class="btn ghost" id="prevPage" type="button">ก่อนหน้า</button>
-          <span id="pageNum">1 / 1</span>
-          <button class="btn ghost" id="nextPage" type="button">ถัดไป</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="field-note">
-      <b>บันทึกภาคสนาม —</b> ระบบเช็คสัดส่วนอักษรไทยต่ออักษรทั้งหมดในข้อความ (ไม่ใช่แค่ "มีไทยสักตัวก็พอ") ถ้าสัดส่วนไทยน้อยกว่า 50% จะนับเป็น <b>"แปลบางส่วน"</b> แยกออกมาให้ตรวจ ส่วนข้อความที่ตั้งใจคงเป็นภาษาอังกฤษ (ชื่อเฉพาะ, ปุ่มคีย์ลัด, ชื่อสถานที่) ก็จะถูกนับเป็น "ยังไม่แปล" ไปด้วยเพราะระบบแยกความตั้งใจไม่ได้ ควรไล่ดูรายการก่อนสรุปผลจริง<br>
-      การแบ่ง <b>บทพูด / UI</b> เป็นการเดาจากชื่อ ID/key (เช่น มีคำว่า menu, button, hud → UI หรือ dialogue, npc, quest → บทพูด) และถ้าไม่มีคำใบ้ในชื่อ จะเดาจากความยาว/รูปประโยคของข้อความแทน ไม่ใช่การวิเคราะห์แม่นยำ 100% — ใช้เป็นตัวกรองคร่าวๆ แล้วไล่ดูรายการจริงอีกที
-    </div>
-
-  </div>
-
-  </div><!-- /view-checker -->
-
 </div>
 
 <script>
-(function(){
-  "use strict";
+// 1. ประกาศตัวแปรข้อมูลให้อยู่นอกฟังก์ชัน (หรืออยู่ด้านบนสุด)
+const STATUS_LABEL = {
+  'working': 'ใช้งานได้',
+  'not-working': 'ใช้งานไม่ได้',
+  'updating': 'กำลังอัปเดต'
+};
 
-  const THAI_RE = /[\u0E00-\u0E7F]/;
-  const KEYVAL_RE = /^([A-Za-z0-9_.\-\[\]]{1,60})\s*[:=]\s*(.+)$/;
-  const PARTIAL_THRESHOLD = 0.5; // fraction of Thai letters among all letters needed to count as "fully translated"
+const GAMES = [
+  {
+    modTitle: "MYGAME",
+    img: "https://example.com/icon.jpg", // ใส่ URL รูปไอคอนตรงนี้ (ถ้าไม่ใส่จะใช้รูป 🎮)
+    status: "not-working",
 
-  function letterCounts(s){
-    const str = String(s || '');
-    const thai = (str.match(/[\u0E00-\u0E7F]/g) || []).length;
-    const latin = (str.match(/[A-Za-z]/g) || []).length;
-    return { thai, totalLetters: thai + latin };
+  }
+];
+
+function renderCheckerList() {
+  const checkerList = document.getElementById('checkerList');
+  if (!checkerList) return;
+
+  // ตรวจสอบว่ามีข้อมูลใน GAMES หรือไม่
+  if (!GAMES || !GAMES.length) {
+    checkerList.innerHTML = '<div style="color: rgb(144, 167, 151);">ไม่มีข้อมูลรายการเช็คสถานะ</div>';
+    return;
   }
 
-  // returns 'translated' | 'partial' | 'untranslated' based on the ratio of Thai
-  // letters to all letters — a single stray Thai word no longer counts as "done"
-  function getStatus(s){
-    const { thai, totalLetters } = letterCounts(s);
-    if(thai === 0 || totalLetters === 0) return 'untranslated';
-    return (thai / totalLetters) >= PARTIAL_THRESHOLD ? 'translated' : 'partial';
-  }
+  checkerList.innerHTML = GAMES.map(game => {
+    // กำหนดค่าสถานะ และข้อความป้ายสถานะ
+    const statusKey = STATUS_LABEL[game.status] ? game.status : 'not-working';
+    const statusLabel = STATUS_LABEL[statusKey] || 'ไม่ทราบสถานะ';
 
-  // ---------- category classifier: dialogue/speech vs UI strings ----------
-  const CATS = ['dialogue','ui','other'];
-  const CAT_LABEL = { dialogue: 'บทพูด', ui: 'UI', other: 'อื่นๆ' };
+    // เลือกใช้รูปภาพ หรือไอคอนข้อความ 🎮
+    const iconHtml = game.img 
+      ? `<img src="${game.img}" alt="${game.modTitle || ''}" class="checker-icon">`
+      : `<div class="checker-icon">🎮</div>`;
 
-  const UI_HINTS = [
-    'ui_','_ui','.ui','menu','hud','button','btn','label','tooltip','option',
-    'setting','title','header','footer','tab_','panel','popup','icon','checkbox',
-    'dropdown','slider','screen','prompt','keybind','hotkey','loading','notification',
-    'toast','msgbox','placeholder','caption'
-  ];
-  const SPEECH_HINTS = [
-    'dialogue','dialog','speech','voice','vo_','_vo','subtitle','subs_','quest',
-    'npc','convo','conversation','chat','line_','script','cutscene','radio',
-    'callout','bark','greet','banter','vox'
-  ];
-
-  function emptyCatCounts(){
-    return { dialogue:{total:0,translated:0}, ui:{total:0,translated:0}, other:{total:0,translated:0} };
-  }
-
-  function classify(id, text){
-    const key = String(id || '').toLowerCase();
-    for(const h of SPEECH_HINTS){ if(key.includes(h)) return 'dialogue'; }
-    for(const h of UI_HINTS){ if(key.includes(h)) return 'ui'; }
-    const t = String(text || '').trim();
-    const words = t.split(/\s+/).filter(Boolean);
-    const endsWithPunct = /[.!?…”"']$/.test(t);
-    if(words.length <= 3 && !endsWithPunct) return 'ui';
-    if(words.length >= 5 || endsWithPunct) return 'dialogue';
-    return 'other';
-  }
-
-  function isMeaningful(s){
-    if(!s) return false;
-    const t = s.trim();
-    if(!t) return false;
-    return /[A-Za-z\u0E00-\u0E7F]/.test(t);
-  }
-
-  function detectFormat(lines){
-    const sample = lines.slice(0,300).map(l=>l.trim()).filter(Boolean);
-    if(!sample.length) return false;
-    const matches = sample.filter(l=>KEYVAL_RE.test(l)).length;
-    return (matches/sample.length) > 0.6;
-  }
-
-  function parseTxt(text){
-    const lines = text.split(/\r\n|\r|\n/);
-    const isKeyVal = detectFormat(lines);
-    let total=0, translated=0;
-    const untranslated=[];
-    const partial=[];
-    const catCounts = emptyCatCounts();
-    lines.forEach((line, idx)=>{
-      if(!line.trim()) return;
-      if(line.trim().startsWith('#') || line.trim().startsWith('//')) return;
-      let key=null, value=line;
-      if(isKeyVal){
-        const m = line.match(KEYVAL_RE);
-        if(m){
-          key = m[1];
-          value = m[2].trim();
-          if(value.length>=2 && value[0]===value[value.length-1] && (value[0]==='"'||value[0]==="'")){
-            value = value.slice(1,-1);
-          }
-        }
-      }
-      if(!isMeaningful(value)) return;
-      total++;
-      const id = key || ('line ' + (idx+1));
-      const cat = classify(key, value);
-      catCounts[cat].total++;
-      const status = getStatus(value);
-      if(status === 'translated'){
-        translated++;
-        catCounts[cat].translated++;
-      } else if(status === 'partial'){
-        partial.push({ id, text: value.slice(0,200), category: cat });
-      } else {
-        untranslated.push({ id, text: value.slice(0,200), category: cat });
-      }
-    });
-    return { total, translated, untranslated, partial, catCounts };
-  }
-
-  // basic CSV parser supporting quoted fields
-  function parseCsvRows(text){
-    const rows=[];
-    let row=[], field='', inQuotes=false;
-    for(let i=0;i<text.length;i++){
-      const c=text[i];
-      if(inQuotes){
-        if(c==='"'){
-          if(text[i+1]==='"'){ field+='"'; i++; }
-          else inQuotes=false;
-        } else field+=c;
-      } else {
-        if(c==='"') inQuotes=true;
-        else if(c===','){ row.push(field); field=''; }
-        else if(c==='\n'){ row.push(field); rows.push(row); row=[]; field=''; }
-        else if(c==='\r'){ /* skip */ }
-        else field+=c;
-      }
-    }
-    if(field.length || row.length){ row.push(field); rows.push(row); }
-    return rows.filter(r => !(r.length===1 && r[0]===''));
-  }
-
-  const SOURCE_HINTS = ["source","en","eng","english","original","key_text","text_en","orig"];
-  const TARGET_HINTS = ["target","th","thai","translation","translated","text_th","แปล","ไทย"];
-
-  function guessColumn(fields, hints){
-    const lower = fields.map(f=>f.toLowerCase());
-    for(const hint of hints){
-      for(let i=0;i<lower.length;i++){
-        if(lower[i].includes(hint)) return i;
-      }
-    }
-    return -1;
-  }
-
-  function parseCsv(text){
-    const rows = parseCsvRows(text);
-    if(!rows.length) return { total:0, translated:0, untranslated:[] };
-    const header = rows[0];
-    let tIdx = guessColumn(header, TARGET_HINTS);
-    let sIdx = guessColumn(header, SOURCE_HINTS);
-    if(tIdx===-1) tIdx = header.length-1;
-    const keyIdx = sIdx!==-1 ? sIdx : 0;
-
-    let total=0, translated=0;
-    const untranslated=[];
-    const partial=[];
-    const catCounts = emptyCatCounts();
-    for(let i=1;i<rows.length;i++){
-      const row = rows[i];
-      const value = row[tIdx] || '';
-      const id = row[keyIdx] || ('row '+(i+1));
-      if(!isMeaningful(value)){
-        const sourceVal = sIdx!==-1 ? (row[sIdx]||'') : '';
-        if(isMeaningful(sourceVal)){
-          total++;
-          const cat = classify(id, sourceVal);
-          catCounts[cat].total++;
-          untranslated.push({ id, text: sourceVal.slice(0,200), category: cat });
-        }
-        continue;
-      }
-      total++;
-      const cat = classify(id, value);
-      catCounts[cat].total++;
-      const status = getStatus(value);
-      if(status === 'translated'){
-        translated++;
-        catCounts[cat].translated++;
-      } else if(status === 'partial'){
-        partial.push({ id, text: value.slice(0,200), category: cat });
-      } else {
-        untranslated.push({ id, text: value.slice(0,200), category: cat });
-      }
-    }
-    return { total, translated, untranslated, partial, catCounts };
-  }
-
-  // ---------- state ----------
-  let files = []; // {name, total, translated, untranslated:[{id,text,category}], partial:[{id,text,category}], catCounts}
-  let activeFilter = null; // filename or null = all
-  let categoryFilter = null; // 'dialogue' | 'ui' | 'other' | null = all
-  let statusFilter = null; // 'untranslated' | 'partial' | null = all
-  let searchTerm = '';
-  let page = 1;
-  const PAGE_SIZE = 60;
-
-  // ---------- DOM ----------
-  const dropzone = document.getElementById('dropzone');
-  const fileInput = document.getElementById('fileInput');
-  const folderInput = document.getElementById('folderInput');
-  const errMsg = document.getElementById('errMsg');
-  const dashboard = document.getElementById('dashboard');
-  const dropSection = document.getElementById('dropSection');
-
-  function showError(msg){
-    errMsg.textContent = msg;
-    errMsg.style.display = 'block';
-  }
-  function clearError(){ errMsg.style.display = 'none'; }
-
-  async function handleFiles(fileObjs){
-    clearError();
-    const valid = fileObjs.filter(f => /\.(txt|csv)$/i.test(f.name));
-    if(!valid.length){
-      showError('ไม่พบไฟล์ .txt หรือ .csv ในรายการที่เลือก');
-      return;
-    }
-    for(const f of valid){
-      try{
-        const text = await f.text();
-        const result = /\.csv$/i.test(f.name) ? parseCsv(text) : parseTxt(text);
-        files.push({ name: f.name, total: result.total, translated: result.translated, untranslated: result.untranslated, partial: result.partial, catCounts: result.catCounts });
-      }catch(e){
-        showError('อ่านไฟล์ไม่สำเร็จ: ' + f.name);
-      }
-    }
-    if(files.length){
-      dropSection.style.display = 'none';
-      dashboard.classList.add('show');
-      activeFilter = null;
-      page = 1;
-      render();
-    }
-  }
-
-  dropzone.addEventListener('click', (e)=>{
-    if(e.target.closest('#pickFolderBtn') || e.target.closest('#pickFilesBtn')) return;
-    fileInput.click();
-  });
-  dropzone.addEventListener('keydown', (e)=>{
-    if(e.key==='Enter' || e.key===' '){ e.preventDefault(); fileInput.click(); }
-  });
-  document.getElementById('pickFilesBtn').addEventListener('click', ()=>fileInput.click());
-  document.getElementById('pickFolderBtn').addEventListener('click', ()=>folderInput.click());
-  fileInput.addEventListener('change', (e)=>{ handleFiles(Array.from(e.target.files)); fileInput.value=''; });
-  folderInput.addEventListener('change', (e)=>{ handleFiles(Array.from(e.target.files)); folderInput.value=''; });
-
-  ['dragenter','dragover'].forEach(evt=>{
-    dropzone.addEventListener(evt, (e)=>{ e.preventDefault(); dropzone.classList.add('drag'); });
-  });
-  ['dragleave','drop'].forEach(evt=>{
-    dropzone.addEventListener(evt, (e)=>{ e.preventDefault(); dropzone.classList.remove('drag'); });
-  });
-  dropzone.addEventListener('drop', (e)=>{
-    const dt = e.dataTransfer;
-    if(dt && dt.files && dt.files.length) handleFiles(Array.from(dt.files));
-  });
-
-  document.getElementById('addMoreBtn').addEventListener('click', ()=>fileInput.click());
-  document.getElementById('resetBtn').addEventListener('click', ()=>{
-    files = []; activeFilter = null; categoryFilter = null; statusFilter = null; searchTerm=''; page=1;
-    document.getElementById('searchInput').value='';
-    document.querySelectorAll('#catFilter .cat-pill').forEach(b=>b.classList.toggle('active', !b.dataset.cat));
-    document.querySelectorAll('#statusFilterBtns .cat-pill').forEach(b=>b.classList.toggle('active', !b.dataset.status));
-    document.getElementById('statusDot').classList.remove('active');
-    document.getElementById('sysStatusText').textContent = 'SYSTEM READY — รอไฟล์นำเข้า';
-    dashboard.classList.remove('show');
-    dropSection.style.display = 'block';
-    clearError();
-  });
-
-  document.querySelectorAll('#catFilter .cat-pill').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      categoryFilter = btn.dataset.cat || null;
-      document.querySelectorAll('#catFilter .cat-pill').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      page = 1;
-      renderTable();
-    });
-  });
-
-  document.querySelectorAll('#statusFilterBtns .cat-pill').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      statusFilter = btn.dataset.status || null;
-      document.querySelectorAll('#statusFilterBtns .cat-pill').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      page = 1;
-      renderTable();
-    });
-  });
-
-  document.getElementById('searchInput').addEventListener('input', (e)=>{
-    searchTerm = e.target.value.trim().toLowerCase();
-    page = 1;
-    renderTable();
-  });
-  document.getElementById('prevPage').addEventListener('click', ()=>{ if(page>1){ page--; renderTable(); } });
-  document.getElementById('nextPage').addEventListener('click', ()=>{
-    const total = getFilteredItems().length;
-    const maxPage = Math.max(1, Math.ceil(total/PAGE_SIZE));
-    if(page<maxPage){ page++; renderTable(); }
-  });
-
-  document.getElementById('exportBtn').addEventListener('click', ()=>{
-    const items = getFilteredItems();
-    let csv = 'file,identifier,status,category,text\n';
-    items.forEach(it=>{
-      const esc = s => '"' + String(s).replace(/"/g,'""') + '"';
-      const statusLabel = it.status==='partial' ? 'แปลบางส่วน' : 'ยังไม่แปล';
-      csv += [esc(it.file), esc(it.id), esc(statusLabel), esc(CAT_LABEL[it.category] || it.category), esc(it.text)].join(',') + '\n';
-    });
-    const blob = new Blob([csv], { type:'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'untranslated_report.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-  });
-
-  // ---------- rendering ----------
-  function getFilteredItems(){
-    let items = [];
-    files.forEach(f=>{
-      if(activeFilter && f.name !== activeFilter) return;
-      const combined = [
-        ...f.untranslated.map(u=>({ ...u, status: 'untranslated' })),
-        ...f.partial.map(u=>({ ...u, status: 'partial' }))
-      ];
-      combined.forEach(u=>{
-        if(categoryFilter && u.category !== categoryFilter) return;
-        if(statusFilter && u.status !== statusFilter) return;
-        items.push({ file: f.name, id: u.id, text: u.text, category: u.category, status: u.status });
-      });
-    });
-    if(searchTerm){
-      items = items.filter(it =>
-        it.text.toLowerCase().includes(searchTerm) ||
-        String(it.id).toLowerCase().includes(searchTerm)
-      );
-    }
-    return items;
-  }
-
-  function highlight(text){
-    if(!searchTerm) return escapeHtml(text);
-    const esc = escapeHtml(text);
-    const idx = esc.toLowerCase().indexOf(searchTerm.toLowerCase());
-    if(idx===-1) return esc;
-    return esc.slice(0,idx) + '<mark>' + esc.slice(idx, idx+searchTerm.length) + '</mark>' + esc.slice(idx+searchTerm.length);
-  }
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  }
-
-  function render(){
-    const totalAll = files.reduce((a,f)=>a+f.total,0);
-    const doneAll = files.reduce((a,f)=>a+f.translated,0);
-    const partialAll = files.reduce((a,f)=>a+f.partial.length,0);
-    const todoAll = files.reduce((a,f)=>a+f.untranslated.length,0);
-    const pct = totalAll ? (doneAll/totalAll*100) : 0;
-
-    document.getElementById('statTotal').textContent = totalAll.toLocaleString();
-    document.getElementById('statDone').textContent = doneAll.toLocaleString();
-    document.getElementById('statPartial').textContent = partialAll.toLocaleString();
-    document.getElementById('statTodo').textContent = todoAll.toLocaleString();
-    document.getElementById('gaugeDone').textContent = doneAll.toLocaleString();
-    document.getElementById('gaugeTotal').textContent = totalAll.toLocaleString();
-
-    const statusDot = document.getElementById('statusDot');
-    const statusText = document.getElementById('sysStatusText');
-    statusDot.classList.add('active');
-    statusText.textContent = `${files.length} ไฟล์ออนไลน์ — สแกนแล้ว ${totalAll.toLocaleString()} รายการ`;
-
-    const catAgg = emptyCatCounts();
-    files.forEach(f=>{
-      CATS.forEach(cat=>{
-        catAgg[cat].total += f.catCounts[cat].total;
-        catAgg[cat].translated += f.catCounts[cat].translated;
-      });
-    });
-    document.getElementById('catDialogueTodo').textContent = (catAgg.dialogue.total - catAgg.dialogue.translated).toLocaleString();
-    document.getElementById('catDialogueTotal').textContent = catAgg.dialogue.total.toLocaleString();
-    document.getElementById('catUiTodo').textContent = (catAgg.ui.total - catAgg.ui.translated).toLocaleString();
-    document.getElementById('catUiTotal').textContent = catAgg.ui.total.toLocaleString();
-    document.getElementById('catOtherTodo').textContent = (catAgg.other.total - catAgg.other.translated).toLocaleString();
-    document.getElementById('catOtherTotal').textContent = catAgg.other.total.toLocaleString();
-
-    drawGauge(pct);
-    renderFileList();
-    document.getElementById('fileColHead').style.display = files.length>1 ? '' : 'none';
-    renderTable();
-  }
-
-  function renderFileList(){
-    const wrap = document.getElementById('fileList');
-    wrap.innerHTML = '';
-    if(files.length < 2) return;
-
-    const allRow = document.createElement('div');
-    allRow.className = 'file-row' + (activeFilter===null ? ' active' : '');
-    allRow.innerHTML = `<span class="fname">ทุกไฟล์ (${files.length})</span>`;
-    allRow.addEventListener('click', ()=>{ activeFilter=null; page=1; renderFileList(); renderTable(); });
-    wrap.appendChild(allRow);
-
-    files.forEach(f=>{
-      const pct = f.total ? (f.translated/f.total*100) : 0;
-      const row = document.createElement('div');
-      row.className = 'file-row' + (activeFilter===f.name ? ' active' : '');
-      row.innerHTML = `
-        <span class="fname" title="${escapeHtml(f.name)}">${escapeHtml(f.name)}</span>
-        <span class="fbar"><i style="width:${pct}%"></i></span>
-        <span class="fpct">${pct.toFixed(0)}%</span>
-      `;
-      row.addEventListener('click', ()=>{ activeFilter=f.name; page=1; renderFileList(); renderTable(); });
-      wrap.appendChild(row);
-    });
-  }
-
-  function renderTable(){
-    const items = getFilteredItems();
-    document.getElementById('tableCount').textContent = items.length.toLocaleString() + ' รายการ';
-
-    const maxPage = Math.max(1, Math.ceil(items.length/PAGE_SIZE));
-    if(page>maxPage) page = maxPage;
-    const start = (page-1)*PAGE_SIZE;
-    const pageItems = items.slice(start, start+PAGE_SIZE);
-
-    const showFileCol = files.length > 1;
-    const tbody = document.getElementById('tableBody');
-
-    if(!pageItems.length){
-      tbody.innerHTML = `<tr><td colspan="4"><div class="empty-state">${items.length===0 && !searchTerm && !categoryFilter && !statusFilter ? 'ไม่มีรายการที่ต้องตรวจ — เก็บครบทุกจุดแล้ว' : 'ไม่พบรายการที่ตรงกับตัวกรอง'}</div></td></tr>`;
-    } else {
-      tbody.innerHTML = pageItems.map(it => `
-        <tr>
-          <td class="idcol">${escapeHtml(it.id)}</td>
-          ${showFileCol ? `<td class="filecol">${escapeHtml(it.file)}</td>` : ''}
-          <td class="catcol">
-            <span class="cat-badge ${it.status}">${it.status==='partial' ? 'บางส่วน' : 'ยังไม่แปล'}</span>
-            <span class="cat-badge ${it.category}">${escapeHtml(CAT_LABEL[it.category] || it.category)}</span>
-          </td>
-          <td class="textcol">${highlight(it.text)}</td>
-        </tr>
-      `).join('');
-    }
-
-    document.getElementById('pageNum').textContent = page + ' / ' + maxPage;
-    document.getElementById('pageInfo').textContent =
-      items.length ? `${start+1}–${Math.min(start+PAGE_SIZE, items.length)} จาก ${items.length}` : '';
-  }
-
-  // ---------- scope-reticle gauge ----------
-  function drawGauge(pct){
-    const svg = document.getElementById('gaugeSvg');
-    const cx=100, cy=100, r=78;
-    const circumference = 2*Math.PI*r;
-    const offset = circumference * (1 - pct/100);
-
-    let ticks = '';
-    for(let i=0;i<72;i++){
-      const angle = (i/72) * 2*Math.PI;
-      const major = i % 6 === 0;
-      const rOuter = 92;
-      const rInner = major ? 84 : 88;
-      const x1 = cx + rInner*Math.cos(angle), y1 = cy + rInner*Math.sin(angle);
-      const x2 = cx + rOuter*Math.cos(angle), y2 = cy + rOuter*Math.sin(angle);
-      ticks += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--line)" stroke-width="${major?1.4:0.8}"/>`;
-    }
-
-    // radar-sweep wedge: a soft rotating pie-slice, purely ambient/decorative
-    const sweepAngle = 0.4; // ~23deg
-    const swX = cx + r*Math.cos(sweepAngle), swY = cy + r*Math.sin(sweepAngle);
-
-    svg.innerHTML = `
-      <defs>
-        <radialGradient id="radarGrad" cx="0%" cy="50%" r="100%">
-          <stop offset="0%" style="stop-color:var(--blaze);stop-opacity:0.45"/>
-          <stop offset="100%" style="stop-color:var(--blaze);stop-opacity:0"/>
-        </radialGradient>
-      </defs>
-      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--line-soft)" stroke-width="7"/>
-      <g class="radar-sweep">
-        <path d="M ${cx} ${cy} L ${cx+r} ${cy} A ${r} ${r} 0 0 1 ${swX} ${swY} Z" fill="url(#radarGrad)"/>
-      </g>
-      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--blaze)" stroke-width="7"
-        stroke-linecap="round" stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"
-        transform="rotate(-90 ${cx} ${cy})" style="transition: stroke-dashoffset 0.8s cubic-bezier(.4,0,.2,1)"/>
-      ${ticks}
-      <line x1="${cx-10}" y1="${cy}" x2="${cx+10}" y2="${cy}" stroke="var(--muted-2)" stroke-width="1"/>
-      <line x1="${cx}" y1="${cy-10}" x2="${cx}" y2="${cy+10}" stroke="var(--muted-2)" stroke-width="1"/>
-      <text id="gaugePct" x="${cx}" y="${cy+7}" text-anchor="middle" font-size="30" fill="var(--ink)" font-family="'IBM Plex Mono',monospace" font-weight="600">${pct.toFixed(1)}%</text>
+    return `
+      <div class="checker-item">
+        <div class="checker-left">
+          ${iconHtml}
+          <div class="checker-info">
+            <span class="checker-name">${game.modTitle || game.name || 'ไม่มีชื่อม็อด'}</span>
+            ${game.name ? `<span class="checker-eng">${game.name}</span>` : ''}
+          </div>
+        </div>
+        <div class="checker-right">
+          ${game.version ? `<span style="font-size: 0.8rem; color: rgb(144, 167, 151);">v${game.version}</span>` : ''}
+          <span class="game-badge ${statusKey}">${statusLabel}</span>
+        </div>
+      </div>
     `;
-  }
+  }).join('');
+}
 
-})();
+// เรียกให้ฟังก์ชันทำงานเมื่อสคริปต์โหลด
+renderCheckerList();
 </script>
-
 <script>
 (function(){
   "use strict";
@@ -1365,32 +938,38 @@
   // เพิ่มเกมใหม่: copy object ด้านล่างแล้วแก้ค่า ไม่ต้องแตะโค้ดส่วนอื่น
   const GAMES = [
     {
-      name: "theHunter: Call of the Wild",
-      modTitle: "TheHunter COTW ภาษาไทย",
-      status: "released",
-      version: "2",
-      downloadUrl: "https://www.nexusmods.com/thehuntercallofthewild/mods/1020",
-      downloadLabel: "Nexus Mods",
-      discordUrl: "https://discord.gg/5U4xm3hmmk",
+      //name: "theHunter: Call of the Wild",
+      modTitle: "MYGAME",
+      status: "not-working",
+      version: "0",
+      downloadUrl: "",
+      downloadLabel: "GB",
       updated: "2026-07-28",
-      stats: { endorsements: 2, totalDls: 211, views: 965 },
-      note: "แปลอินเทอร์เฟซและข้อความในเกมเป็นภาษาไทย อัปเดตต่อเนื่อง"
+      //stats: { totalDls: 0, views: 0 },
+      note: ""
     },
     {
-      name: "7DTD Thai localization",
-      modTitle: "7DTD ภาษาไทย",
-      status: "released",
-      version: "2",
-      downloadUrl: "https://www.nexusmods.com/7daystodie/mods/11793?tab=files&file_id=44849",
+
+      modTitle: "MYGAME", 
+      status: "not-working",
+      version: "0",
+      downloadUrl: "",
       downloadLabel: "Nexus Mods",
-      discordUrl: "https://discord.gg/5U4xm3hmmk",
       updated: "2026-08-01",
-      stats: { endorsements: 0, totalDls: 0, views: 0 },
-      note: "แปลอินเทอร์เฟซและข้อความในเกมเป็นภาษาไทย อัปเดตต่อเนื่อง"
+      note: ""
+    },
+	{
+      modTitle: "MYGAME",
+      status: "not-working",
+      version: "0",
+      downloadUrl: "",
+      downloadLabel: "GB",
+      updated: "2026-08-01",
+      note: ""
     },
   ];
 
-  const STATUS_LABEL = { released: 'ปล่อยแล้ว', 'in-progress': 'กำลังทำ' };
+  const STATUS_LABEL = { released: 'ปกติ', 'in-progress': 'กําลังอัปเดต เเก้ไข', 'not-working': 'ใช้งานไม่ได้' };
 
   function fmtNum(n){
     if(n === null || n === undefined) return '—';
@@ -1398,16 +977,15 @@
   }
 
   function gameCardHtml(game){
-    const statusKey = game.status === 'released' ? 'released' : 'in-progress';
+  const statusKey = STATUS_LABEL[game.status] ? game.status : 'not-working';
     const statusLabel = STATUS_LABEL[statusKey];
-
+	
     let statsHtml;
     if(game.stats){
       const s = game.stats;
       statsHtml = `<div class="game-stats">
         <span><span class="game-status-dot ${statusKey}"></span>ดาวน์โหลด <b>${fmtNum(s.totalDls)}</b></span>
-        <span>เข้าชม <b>${fmtNum(s.views)}</b></span>
-        <span>ถูกใจ <b>${fmtNum(s.endorsements)}</b></span>
+        <span>เข้าชม <b>${fmtNum(s.views)}</b></span>   
       </div>`;
     } else {
       statsHtml = `<div class="game-stats"><span><span class="game-status-dot ${statusKey}"></span>อัปเดตล่าสุด <b>${game.updated || '—'}</b></span></div>`;
@@ -1427,7 +1005,9 @@
           <div class="game-card-eng">${game.name}</div>
           <h2>${game.modTitle || game.name}</h2>
         </div>
-        <span class="game-badge ${statusKey}">${statusLabel}</span>
+        <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+          <span class="game-badge ${statusKey}">${statusLabel}</span>${game.version ? `<span class="game-badge" style="font-size: 0.75rem; color: rgb(236, 230, 214); background-color: rgba(134, 174, 104, 0.2); border: 1px solid rgba(134, 174, 104, 0.4); font-weight: 600;">v${game.version}</span>` : ''}
+        </div> 
       </div>
       <p class="note">${game.note || ''}</p>
       ${statsHtml}
