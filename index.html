@@ -14,7 +14,7 @@
   --ink: #ECE6D6;
   --muted: #90A797;
   --muted-2: #63776A;
-  --blaze: #E1652C;
+  --blaze: #026d99;
   --blaze-dim: #E1652C33;
   --moss: #86AE68;
   --moss-dim: #86AE6822;
@@ -374,12 +374,50 @@ body::after {
   .btn:hover { border-color: var(--muted); background: #ffffff08; }
   .btn:active { transform: scale(0.97); }
   .btn:focus-visible { outline: 2px solid var(--blaze); outline-offset: 2px; }
-  .btn.primary {
-    background: var(--blaze);
-    border-color: var(--blaze);
-    color: #17110C;
-  }
-  .btn.primary:hover { background: #ec7038; }
+.btn.primary {
+  background: var(--blaze);
+  border-color: var(--blaze);
+  color: #17110C;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* 🟢 ปกติ (released) */
+.btn.primary.released {
+  background: var(--moss);
+  border-color: var(--moss);
+  color: #17110C;
+}
+
+/* 🟡 กำลังอัปเดต แก้ไข (in-progress) */
+.btn.primary.in-progress {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: #17110C;
+}
+
+/* 🔴 ใช้งานไม่ได้ (not-working) */
+.btn.primary.not-working {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #17110C;
+}
+.btn.primary:hover {
+  filter: brightness(1.2);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.8), 0 0 35px rgba(255, 0, 85, 0.5);
+  transform: translateY(-1px);
+}
+.btn.primary:hover {
+  background: linear-gradient(135deg, #ff0055, #9d00ff, #ff6600, #ccff00, #ff0055);
+  background-size: 300% 300%;
+  border-color: transparent;
+  color: #ffffff;
+  font-weight: 600;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 15px rgba(255, 0, 85, 0.8);
+  box-shadow: 0 0 18px rgba(255, 0, 85, 0.7), 0 0 35px rgba(157, 0, 255, 0.8);
+  animation: rgbShift 2s linear infinite;
+  filter: brightness(1.25);
+  transform: translateY(-2px);
+}
   .btn.ghost { font-size: 12.5px; padding: 8px 14px; }
   input[type="file"] { display: none; }
 
@@ -390,7 +428,17 @@ body::after {
     color: var(--blaze);
     display: none;
   }
-
+@keyframes rgbShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
   /* ---------- Dashboard ---------- */
   #dashboard { display: none; margin-top: 40px; }
   #dashboard.show { display: block; animation: fadein .35s ease both; }
@@ -687,6 +735,49 @@ body::after {
     white-space: nowrap;
     width: 1%;
   }
+  /* ---------- Badge Version RGB Animated ---------- */
+.game-badge.version-rgb {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+  
+  
+  /* พื้นหลังและเส้นขอบ RGB */
+  background: linear-gradient(135deg, rgba(255,0,85,0.25), rgba(122,0,255,0.25), rgba(0,229,255,0.25), rgba(0,255,102,0.25), rgba(255,0,85,0.25));
+  background-size: 300% 300%;
+  border: 1px solid rgba(0, 229, 255, 0.6);
+  
+  /* เอฟเฟกต์แสง และ แอนิเมชันเปลี่ยนสีวนลูป */
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  animation: rgbBadgeShift 4s linear infinite;
+}
+
+@keyframes rgbBadgeShift {
+  0% {
+    background-position: 0% 50%;
+    border-color: #ff0055;
+    box-shadow: 0 0 8px rgba(255, 0, 85, 0.4);
+  }
+  25% {
+    border-color: #7a00ff;
+    box-shadow: 0 0 8px rgba(122, 0, 255, 0.4);
+  }
+  50% {
+    background-position: 100% 50%;
+    border-color: #00e5ff;
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+  }
+  75% {
+    border-color: #00ff66;
+    box-shadow: 0 0 8px rgba(0, 255, 102, 0.4);
+  }
+  100% {
+    background-position: 0% 50%;
+    border-color: #ff0055;
+    box-shadow: 0 0 8px rgba(255, 0, 85, 0.4);
+  }
+}
   td.filecol {
     color: var(--muted);
     font-size: 11.5px;
@@ -941,11 +1032,11 @@ renderCheckerList();
       //name: "theHunter: Call of the Wild",
       modTitle: "MYGAME",
       status: "not-working",
-      version: "0",
+	  version: "0",
       downloadUrl: "",
       downloadLabel: "GB",
       updated: "2026-07-28",
-      //stats: { totalDls: 0, views: 0 },
+      //stats: { totalDls: 0 },
       note: ""
     },
     {
@@ -963,13 +1054,13 @@ renderCheckerList();
       status: "not-working",
       version: "0",
       downloadUrl: "",
-      downloadLabel: "GB",
-      updated: "2026-08-01",
+      downloadLabel: "GsdsdsdsdsddsdB",
+      updated: "2026-08-02",
       note: ""
     },
   ];
 
-  const STATUS_LABEL = { released: 'ปกติ', 'in-progress': 'กําลังอัปเดต เเก้ไข', 'not-working': 'ใช้งานไม่ได้' };
+  const STATUS_LABEL = { released: 'ปกติ', 'in-progress': 'กําลังอัปเดตเเก้ไข', 'not-working': 'ใช้งานไม่ได้' };
 
   function fmtNum(n){
     if(n === null || n === undefined) return '—';
@@ -993,7 +1084,7 @@ renderCheckerList();
 
     let actionsHtml = '';
     if(game.downloadUrl){
-      actionsHtml += `<a class="btn primary" href="${game.downloadUrl}" target="_blank" rel="noopener">ดาวน์โหลด${game.downloadLabel ? ' · ' + game.downloadLabel : ''}</a>`;
+const currentStatus = game.status || 'released'; actionsHtml += `<a class="btn primary ${currentStatus}" href="${game.downloadUrl}" target="_blank" rel="noopener">ดาวน์โหลด${game.downloadLabel ? ' · ' + game.downloadLabel : ''}</a>`;
     }
     if(game.discordUrl){
       actionsHtml += `<a class="btn" href="${game.discordUrl}" target="_blank" rel="noopener">ติดตามในดิสคอร์ด</a>`;
@@ -1005,9 +1096,8 @@ renderCheckerList();
           <div class="game-card-eng">${game.name}</div>
           <h2>${game.modTitle || game.name}</h2>
         </div>
-        <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
-          <span class="game-badge ${statusKey}">${statusLabel}</span>${game.version ? `<span class="game-badge" style="font-size: 0.75rem; color: rgb(236, 230, 214); background-color: rgba(134, 174, 104, 0.2); border: 1px solid rgba(134, 174, 104, 0.4); font-weight: 600;">v${game.version}</span>` : ''}
-        </div> 
+      <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 4px;"><span class="game-badge ${statusKey}">${statusLabel}</span>${game.version ? `<span class="game-badge version-rgb">v${game.version}</span>` : ''}
+     </div>
       </div>
       <p class="note">${game.note || ''}</p>
       ${statsHtml}
