@@ -208,23 +208,6 @@ body::after {
       transparent 3px
     );
   }
-  .scan-sweep {
-    position: fixed;
-    left: 0; right: 0;
-    top: -160px;
-    height: 160px;
-    pointer-events: none;
-    z-index: 61;
-    background: linear-gradient(to bottom, transparent, var(--blaze-dim) 45%, transparent);
-    opacity: .6;
-    animation: scanSweep 8s linear infinite;
-  }
-  @keyframes scanSweep {
-    0% { top: -160px; }
-    60% { top: 100vh; }
-    100% { top: 100vh; }
-  }
-
   .hud-frame { position: relative; }
   .hud-frame::before, .hud-frame::after {
     content: "";
