@@ -24,19 +24,13 @@
   --radius-sm: 8px;
   --danger: #e64545;
   --danger-dim: #e6454522;
+  --bg: #101B15;
+  --panel: #14221A;
 }
 
 * { box-sizing: border-box; }
 
 /* ---------- พื้นหลังหลัก ---------- */
-html, body {
-  margin: 0;
-  padding: 0;
-  background-color: #101B15;
-  color: var(--ink);
-  font-family: 'IBM Plex Sans Thai', 'IBM Plex Sans', system-ui, sans-serif;
-  min-height: 100vh;
-}
 
 /* เลเยอร์รูปภาพพื้นหลัง + เอฟเฟกต์เคลื่อนไหว */
 body::before {
@@ -44,15 +38,13 @@ body::before {
   position: fixed;
   inset: -5%;
   z-index: -2;
-  /* ใช้ URL รูปภาพ (JPG/PNG/WEBP) เท่านั้น */
   background-image: 
-
-	
-    radial-gradient(circle at 50% 50%, rgba(16, 27, 21, 0.75) 0%, rgba(12, 20, 15, 0.95) 100%),
-    linear-gradient(to bottom, rgba(16, 27, 21, 0.5), rgba(12, 20, 15, 0.5)),
-    url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOW5zcWN6d3N1NTZiMm1yMXNmajMzZjljdm9sajhrN2p0NW9mNDM3ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/wIT0tVg65MNFII7dWI/giphy.gif'); /* 👈 เปลี่ยนเป็น URL รูปภาพของคุณ */
+    radial-gradient(circle at 50% 50%, rgba(16, 27, 21, 0.45) 0%, rgba(12, 20, 15, 0.85) 100%),
+    linear-gradient(to bottom, rgba(16, 27, 21, 0.3), rgba(12, 20, 15, 0.3)),
+    url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExazNhNTR6dWNndzk2NjBsNDhjNnJwajJhbDh6dmIyM3hkOHBoOTU3aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/wIT0tVg65MNFII7dWI/giphy.gif');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   animation: bgPulseZoom 20s ease-in-out infinite alternate;
 }
 
@@ -68,12 +60,7 @@ body::after {
     radial-gradient(circle at 80% 80%, var(--moss-dim) 0%, transparent 40%);
   animation: glowShift 10s ease-in-out infinite alternate;
 }
-/* เอฟเฟกต์ใหม่: ดาวกระพริบวิบวับ */
-@keyframes starTwinkle {
-  0% { opacity: 0.65; }
-  50% { opacity: 1; }
-  100% { opacity: 0.75; }
-}
+
 @keyframes bgPulseZoom {
   0% { transform: scale(1) rotate(0deg); }
   100% { transform: scale(1.08) rotate(0.5deg); }
@@ -84,6 +71,7 @@ body::after {
   50% { opacity: 0.8; }
   100% { opacity: 0.5; transform: translateY(-20px); }
 }
+
 /* Container และหัวข้อ */
 .checker-container {
   max-width: 900px;
@@ -123,14 +111,12 @@ body::after {
   background: rgba(20, 34, 26, 0.85);
 }
 
-/* ฝั่งซ้าย: รูปภาพ/ไอคอน + ชื่อ */
 .checker-left {
   display: flex;
   align-items: center;
   gap: 14px;
 }
 
-/* รูปภาพหรือไอคอนเกม */
 .checker-icon {
   width: 42px;
   height: 42px;
@@ -145,7 +131,6 @@ body::after {
   color: rgb(134, 174, 104);
 }
 
-/* ชื่อเกมและชื่อม็อด */
 .checker-info {
   display: flex;
   flex-direction: column;
@@ -163,200 +148,88 @@ body::after {
   color: rgb(144, 167, 151);
 }
 
-/* ฝั่งขวา: สถานะและเวอร์ชัน */
 .checker-right {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-  * { box-sizing: border-box; }
+::selection { background: var(--blaze-dim); color: var(--ink); }
+a { color: var(--blaze); }
 
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'IBM Plex Sans Thai', 'IBM Plex Sans', system-ui, sans-serif;
-    min-height: 100vh;
-  }
+.scan-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  mix-blend-mode: overlay;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.05) 0px,
+    rgba(255,255,255,0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+.hud-frame { position: relative; }
+.hud-frame::before, .hud-frame::after {
+  content: "";
+  position: absolute;
+  width: 16px; height: 16px;
+  border: 1.5px solid var(--blaze);
+  opacity: .5;
+  pointer-events: none;
+}
+.hud-frame::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+.hud-frame::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
 
-  body{
-    background-image:
-      radial-gradient(circle at 15% 8%, #1c2b21 0%, transparent 45%),
-      repeating-radial-gradient(circle at 85% 92%, #17251c 0px, #17251c 1px, transparent 2px, transparent 34px),
-      var(--bg);
-    background-attachment: fixed;
-  }
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
 
-  ::selection { background: var(--blaze-dim); color: var(--ink); }
+header {
+  position: relative;
+  padding: 28px 0 34px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 34px;
+}
 
-  a { color: var(--blaze); }
+h1 {
+  font-family: 'Chonburi', 'IBM Plex Sans Thai', serif;
+  font-weight: 400;
+  font-size: clamp(32px, 5vw, 46px);
+  line-height: 1.15;
+  margin: 0 0 10px;
+  color: var(--ink);
+}
 
-  /* ---------- ambient scanner effects ---------- */
-  .scan-overlay {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 60;
-    mix-blend-mode: overlay;
-    background: repeating-linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.05) 0px,
-      rgba(255,255,255,0.05) 1px,
-      transparent 1px,
-      transparent 3px
-    );
-  }
-  .hud-frame { position: relative; }
-  .hud-frame::before, .hud-frame::after {
-    content: "";
-    position: absolute;
-    width: 16px; height: 16px;
-    border: 1.5px solid var(--blaze);
-    opacity: .5;
-    pointer-events: none;
-  }
-  .hud-frame::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
-  .hud-frame::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+.dropzone {
+  border: 1.5px dashed var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #16221B 0%, #131E17 100%);
+  padding: 46px 28px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+}
 
-  .wrap {
-    max-width: 1040px;
-    margin: 0 auto;
-    padding: 40px 24px 80px;
-  }
+.btn {
+  font-family: 'IBM Plex Sans Thai';
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease, transform .1s ease;
+}
+.btn:hover { border-color: var(--muted); background: #ffffff08; }
+.btn:active { transform: scale(0.97); }
 
-  /* ---------- Header ---------- */
-  header {
-    position: relative;
-    padding: 28px 0 34px;
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 34px;
-  }
-  .eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11.5px;
-    letter-spacing: 0.22em;
-    color: var(--blaze);
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-  }
-  .eyebrow::before {
-    content: "";
-    width: 7px; height: 7px;
-    background: var(--blaze);
-    border-radius: 1px;
-    transform: rotate(45deg);
-    flex-shrink: 0;
-  }
-  h1 {
-    font-family: 'Chonburi', 'IBM Plex Sans Thai', serif;
-    font-weight: 400;
-    font-size: clamp(32px, 5vw, 46px);
-    line-height: 1.15;
-    margin: 0 0 10px;
-    color: var(--ink);
-  }
-  header p.sub {
-    color: var(--muted);
-    font-size: 15px;
-    max-width: 560px;
-    margin: 0;
-    line-height: 1.6;
-  }
-  .sys-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 14px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: var(--muted-2);
-  }
-  .status-dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--muted-2);
-    flex-shrink: 0;
-  }
-  .status-dot.active {
-    background: var(--moss);
-    box-shadow: 0 0 0 0 var(--moss-dim);
-    animation: statusPulse 2s ease-out infinite;
-  }
-  @keyframes statusPulse {
-    0% { box-shadow: 0 0 0 0 var(--moss-dim); }
-    70% { box-shadow: 0 0 0 6px transparent; }
-    100% { box-shadow: 0 0 0 0 transparent; }
-  }
-  header .coords {
-    position: absolute;
-    right: 0;
-    top: 30px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--muted-2);
-    text-align: right;
-    line-height: 1.7;
-    letter-spacing: 0.02em;
-  }
-  @media (max-width: 640px){ header .coords{ display:none; } }
-
-  /* ---------- Drop zone ---------- */
-  .dropzone {
-    border: 1.5px dashed var(--line);
-    border-radius: var(--radius);
-    background: linear-gradient(180deg, #16221B 0%, #131E17 100%);
-    padding: 46px 28px;
-    text-align: center;
-    transition: border-color .2s ease, background .2s ease;
-    cursor: pointer;
-    position: relative;
-    outline: none;
-  }
-  .dropzone.drag {
-    border-color: var(--blaze);
-    background: linear-gradient(180deg, #1D281F 0%, #16221B 100%);
-  }
-  .dropzone:focus-visible { outline: 2px solid var(--blaze); outline-offset: 4px; }
-  .dz-icon {
-    width: 46px; height: 46px;
-    margin: 0 auto 16px;
-    color: var(--muted);
-  }
-  .dropzone.drag .dz-icon { color: var(--blaze); }
-  .dropzone h2 {
-    font-family: 'IBM Plex Sans Thai';
-    font-weight: 600;
-    font-size: 17px;
-    margin: 0 0 6px;
-    color: var(--ink);
-  }
-  .dropzone p {
-    color: var(--muted);
-    font-size: 13.5px;
-    margin: 0 0 20px;
-  }
-  .dz-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  .btn {
-    font-family: 'IBM Plex Sans Thai';
-    font-weight: 600;
-    font-size: 13.5px;
-    padding: 10px 18px;
-    border-radius: 999px;
-    border: 1px solid var(--line);
-    background: transparent;
-    color: var(--ink);
-    cursor: pointer;
-    transition: border-color .15s ease, background .15s ease, transform .1s ease;
-  }
-  .btn:hover { border-color: var(--muted); background: #ffffff08; }
-  .btn:active { transform: scale(0.97); }
-  .btn:focus-visible { outline: 2px solid var(--blaze); outline-offset: 2px; }
 .btn.primary {
   background: var(--blaze);
   border-color: var(--blaze);
@@ -364,31 +237,24 @@ body::after {
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-/* 🟢 ปกติ (released) */
 .btn.primary.released {
   background: var(--moss);
   border-color: var(--moss);
   color: #17110C;
 }
 
-/* 🟡 กำลังอัปเดต แก้ไข (in-progress) */
 .btn.primary.in-progress {
   background: var(--amber);
   border-color: var(--amber);
   color: #17110C;
 }
 
-/* 🔴 ใช้งานไม่ได้ (not-working) */
 .btn.primary.not-working {
   background: var(--danger);
   border-color: var(--danger);
   color: #17110C;
 }
-.btn.primary:hover {
-  filter: brightness(1.2);
-  box-shadow: 0 0 20px rgba(0, 229, 255, 0.8), 0 0 35px rgba(255, 0, 85, 0.5);
-  transform: translateY(-1px);
-}
+
 .btn.primary:hover {
   background: linear-gradient(135deg, #ff0055, #9d00ff, #ff6600, #ccff00, #ff0055);
   background-size: 300% 300%;
@@ -401,511 +267,118 @@ body::after {
   filter: brightness(1.25);
   transform: translateY(-2px);
 }
-  .btn.ghost { font-size: 12.5px; padding: 8px 14px; }
-  input[type="file"] { display: none; }
 
-  .err-msg {
-    margin-top: 16px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12.5px;
-    color: var(--blaze);
-    display: none;
-  }
 @keyframes rgbShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
-  /* ---------- Dashboard ---------- */
-  #dashboard { display: none; margin-top: 40px; }
-  #dashboard.show { display: block; animation: fadein .35s ease both; }
-  @keyframes fadein { from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
 
-  .radar-sweep {
-    transform-origin: 100px 100px;
-    animation: radarspin 4s linear infinite;
-  }
-  @keyframes radarspin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  .grid-top {
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    gap: 28px;
-    margin-bottom: 30px;
-  }
-  @media (max-width: 720px){ .grid-top{ grid-template-columns: 1fr; } }
-
-  /* Gauge */
-  .gauge-card {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 26px 20px 22px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .gauge-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10.5px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted-2);
-    margin-bottom: 12px;
-  }
-  .gauge-frac {
-    margin-top: 10px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--muted);
-  }
-  .gauge-frac b { color: var(--ink); font-weight: 600; }
-  #gaugePct {
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 600;
-    text-shadow: 0 0 14px var(--blaze-dim), 0 0 4px var(--blaze);
-  }
-
-  /* Stat cards */
-  .stat-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-  }
-  @media (max-width: 720px){ .stat-row{ grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 480px){ .stat-row{ grid-template-columns: 1fr; } }
-  .stat-card {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    padding: 16px 16px 14px;
-    position: relative;
-    overflow: hidden;
-  }
-  .stat-card::after{
-    content:"";
-    position:absolute; left:0; right:0; bottom:0;
-    height: 3px;
-    background: var(--stat-color, var(--muted));
-    opacity: .8;
-  }
-  .stat-card .num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 26px;
-    font-weight: 600;
-    color: var(--ink);
-    line-height: 1.1;
-    text-shadow: 0 0 10px var(--stat-color, transparent);
-  }
-  .stat-card .lbl {
-    font-size: 12.5px;
-    color: var(--muted);
-    margin-top: 6px;
-  }
-  .stat-card.total { --stat-color: var(--muted); }
-  .stat-card.done { --stat-color: var(--moss); }
-  .stat-card.partial { --stat-color: var(--amber); }
-  .stat-card.todo { --stat-color: var(--blaze); }
-
-  .cat-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: 14px;
-  }
-  @media (max-width: 480px){ .cat-row{ grid-template-columns: 1fr; } }
-  .cat-card {
-    background: #ffffff05;
-    border: 1px solid var(--line-soft);
-    border-radius: var(--radius-sm);
-    padding: 10px 12px;
-    border-left: 3px solid var(--stat-color, var(--muted));
-  }
-  .cat-card.dialogue { --stat-color: var(--moss); }
-  .cat-card.ui { --stat-color: var(--blaze); }
-  .cat-card.other { --stat-color: var(--muted-2); }
-  .cat-lbl {
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 4px;
-  }
-  .cat-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--ink);
-    text-shadow: 0 0 8px var(--stat-color, transparent);
-  }
-  .cat-num .cat-of {
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--muted);
-  }
-
-  .filter-groups {
-    display: flex;
-    gap: 18px;
-    flex-wrap: wrap;
-    width: 100%;
-    order: 3;
-    margin: 2px 0 0;
-  }
-  .filter-group {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .filter-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted-2);
-    flex-shrink: 0;
-  }
-
-  .cat-filter {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .cat-pill {
-    font-family: 'IBM Plex Sans Thai';
-    font-size: 12px;
-    font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 999px;
-    border: 1px solid var(--line);
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    transition: border-color .15s ease, background .15s ease, color .15s ease;
-  }
-  .cat-pill:hover { border-color: var(--muted); color: var(--ink); }
-  .cat-pill.active {
-    border-color: var(--blaze);
-    background: var(--blaze-dim);
-    color: var(--blaze);
-  }
-
-  .file-list {
-    margin-top: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .file-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 12px;
-    border: 1px solid var(--line-soft);
-    border-radius: var(--radius-sm);
-    background: #ffffff05;
-    cursor: pointer;
-    font-size: 12.5px;
-    transition: border-color .15s ease, background .15s ease;
-  }
-  .file-row:hover { border-color: var(--muted-2); }
-  .file-row.active { border-color: var(--blaze); background: var(--blaze-dim); }
-  .file-row .fname {
-    flex: 1;
-    color: var(--ink);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .file-row .fbar {
-    width: 60px; height: 4px;
-    background: var(--line-soft);
-    border-radius: 2px;
-    overflow: hidden;
-    flex-shrink: 0;
-  }
-  .file-row .fbar i { display:block; height:100%; background: var(--moss); }
-  .file-row .fpct {
-    font-family: 'IBM Plex Mono', monospace;
-    color: var(--muted);
-    width: 42px;
-    text-align: right;
-    flex-shrink: 0;
-  }
-
-  /* ---------- Table section ---------- */
-  .table-card {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-  .table-head {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 18px;
-    border-bottom: 1px solid var(--line);
-    flex-wrap: wrap;
-  }
-  .table-head h3 {
-    font-family: 'IBM Plex Sans Thai';
-    font-size: 14.5px;
-    font-weight: 600;
-    margin: 0;
-    flex-shrink: 0;
-  }
-  .table-head .count-pill {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    background: var(--blaze-dim);
-    color: var(--blaze);
-    padding: 2px 8px;
-    border-radius: 999px;
-  }
-  .search-box {
-    flex: 1;
-    min-width: 160px;
-    position: relative;
-  }
-  .search-box input {
-    width: 100%;
-    background: var(--bg-2);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 8px 14px 8px 32px;
-    color: var(--ink);
-    font-family: 'IBM Plex Sans Thai';
-    font-size: 13px;
-  }
-  .search-box input::placeholder { color: var(--muted-2); }
-  .search-box input:focus-visible { outline: 2px solid var(--blaze); outline-offset: 1px; }
-  .search-box svg {
-    position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
-    width: 13px; height: 13px; color: var(--muted-2);
-  }
-
-  table { width: 100%; border-collapse: collapse; }
-  thead th {
-    text-align: left;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10.5px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted-2);
-    padding: 10px 18px;
-    border-bottom: 1px solid var(--line-soft);
-    background: #00000020;
-  }
-  tbody td {
-    padding: 10px 18px;
-    font-size: 13px;
-    border-bottom: 1px solid var(--line-soft);
-    vertical-align: top;
-  }
-  tbody tr:hover td { background: #ffffff05; }
-  td.idcol {
-    font-family: 'IBM Plex Mono', monospace;
-    color: var(--muted);
-    white-space: nowrap;
-    width: 1%;
-  }
-  /* ---------- Badge Version RGB Animated ---------- */
+/* ---------- Badge Version RGB Animated ---------- */
 .game-badge.version-rgb {
   font-size: 0.75rem;
   font-weight: 600;
   color: #ffffff;
-  
-  
-  /* พื้นหลังและเส้นขอบ RGB */
   background: linear-gradient(135deg, rgba(255,0,85,0.25), rgba(122,0,255,0.25), rgba(0,229,255,0.25), rgba(0,255,102,0.25), rgba(255,0,85,0.25));
   background-size: 300% 300%;
   border: 1px solid rgba(0, 229, 255, 0.6);
-  
-  /* เอฟเฟกต์แสง และ แอนิเมชันเปลี่ยนสีวนลูป */
   box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
   animation: rgbBadgeShift 4s linear infinite;
 }
 
 @keyframes rgbBadgeShift {
-  0% {
-    background-position: 0% 50%;
-    border-color: #ff0055;
-    box-shadow: 0 0 8px rgba(255, 0, 85, 0.4);
-  }
-  25% {
-    border-color: #7a00ff;
-    box-shadow: 0 0 8px rgba(122, 0, 255, 0.4);
-  }
-  50% {
-    background-position: 100% 50%;
-    border-color: #00e5ff;
-    box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
-  }
-  75% {
-    border-color: #00ff66;
-    box-shadow: 0 0 8px rgba(0, 255, 102, 0.4);
-  }
-  100% {
-    background-position: 0% 50%;
-    border-color: #ff0055;
-    box-shadow: 0 0 8px rgba(255, 0, 85, 0.4);
-  }
+  0% { background-position: 0% 50%; border-color: #ff0055; box-shadow: 0 0 8px rgba(255, 0, 85, 0.4); }
+  25% { border-color: #7a00ff; box-shadow: 0 0 8px rgba(122, 0, 255, 0.4); }
+  50% { background-position: 100% 50%; border-color: #00e5ff; box-shadow: 0 0 8px rgba(0, 229, 255, 0.4); }
+  75% { border-color: #00ff66; box-shadow: 0 0 8px rgba(0, 255, 102, 0.4); }
+  100% { background-position: 0% 50%; border-color: #ff0055; box-shadow: 0 0 8px rgba(255, 0, 85, 0.4); }
 }
-  td.filecol {
-    color: var(--muted);
-    font-size: 11.5px;
-    white-space: nowrap;
-    width: 1%;
-  }
-  td.textcol { color: var(--ink); line-height: 1.5; }
-  td.catcol {
-    white-space: nowrap;
-    width: 1%;
-  }
-  td.catcol { display: table-cell; }
-  .cat-badge {
-    display: inline-block;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10.5px;
-    padding: 2px 8px;
-    border-radius: 999px;
-    border: 1px solid var(--line-soft);
-    color: var(--muted);
-    margin: 1px 0;
-  }
-  .cat-badge + .cat-badge { margin-left: 4px; }
-  .cat-badge.dialogue { color: var(--moss); border-color: var(--moss-dim); background: var(--moss-dim); }
-  .cat-badge.ui { color: var(--blaze); border-color: var(--blaze-dim); background: var(--blaze-dim); }
-  .cat-badge.other { color: var(--muted-2); }
-  .cat-badge.partial { color: var(--amber); border-color: var(--amber-dim); background: var(--amber-dim); }
-  .cat-badge.untranslated { color: var(--muted-2); }
-  mark { background: var(--blaze-dim); color: var(--blaze); border-radius: 2px; padding: 0 1px; }
 
-  .table-foot {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 18px;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .page-controls { display: flex; align-items: center; gap: 10px; }
-  .page-controls span {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--muted);
-  }
-  .empty-state {
-    padding: 44px 20px;
-    text-align: center;
-    color: var(--muted);
-    font-size: 13.5px;
-  }
+.field-note {
+  margin-top: 26px;
+  border-left: 2px solid var(--blaze);
+  padding: 4px 16px;
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.field-note b { color: var(--ink); font-weight: 600; }
 
-  /* ---------- Field note ---------- */
-  .field-note {
-    margin-top: 26px;
-    border-left: 2px solid var(--blaze);
-    padding: 4px 16px;
-    font-size: 12.5px;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-  .field-note b { color: var(--ink); font-weight: 600; }
+.nav-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.nav-tabs .btn.tab.active {
+  background: var(--blaze);
+  border-color: var(--blaze);
+  color: #17110C;
+}
 
-  @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
-  }
+.view { display: none; }
+.view.show { display: block; animation: fadein .35s ease both; }
+@keyframes fadein { from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
 
-  /* ---------- Nav tabs ---------- */
-  .nav-tabs {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 22px;
-  }
-  .nav-tabs .btn.tab.active {
-    background: var(--blaze);
-    border-color: var(--blaze);
-    color: #17110C;
-  }
+.section-title {
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--muted-2); margin: 0 0 16px;
+}
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+.game-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.game-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.game-card-eng {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted-2);
+}
+.game-card h2 {
+  font-family: 'IBM Plex Sans Thai'; font-weight: 600; font-size: 17px; margin: 2px 0 0; color: var(--ink);
+}
+.game-badge {
+  font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.05em;
+  padding: 3px 9px; border-radius: 999px; white-space: nowrap; flex-shrink: 0;
+  border: 1px solid var(--line-soft);
+}
+.game-badge.released, .game-badge.working { color: var(--moss); border-color: var(--moss-dim); background: var(--moss-dim); }
+.game-badge.in-progress, .game-badge.updating { color: var(--amber); border-color: var(--amber-dim); background: var(--amber-dim); }
+.game-badge.not-working { color: var(--danger); border-color: var(--danger-dim); background: var(--danger-dim); }
 
-  /* ---------- View switching ---------- */
-  .view { display: none; }
-  .view.show { display: block; animation: fadein .35s ease both; }
-
-  /* ---------- Home / game hub ---------- */
-  .section-title {
-    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em;
-    text-transform: uppercase; color: var(--muted-2); margin: 0 0 16px;
-  }
-  .game-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 18px;
-  }
-  .game-card {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 20px 20px 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .game-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-  .game-card-eng {
-    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--muted-2);
-  }
-  .game-card h2 {
-    font-family: 'IBM Plex Sans Thai'; font-weight: 600; font-size: 17px; margin: 2px 0 0; color: var(--ink);
-  }
-  .game-badge {
-    font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.05em;
-    padding: 3px 9px; border-radius: 999px; white-space: nowrap; flex-shrink: 0;
-    border: 1px solid var(--line-soft);
-  }
-  .game-badge.released { color: var(--moss); border-color: var(--moss-dim); background: var(--moss-dim); }
-  .game-badge.in-progress { color: var(--amber); border-color: var(--amber-dim); background: var(--amber-dim); }
-  .game-badge.not-working {color: var(--danger);border-color: var(--danger-dim);background: var(--danger-dim);}
-  .game-card p.note { color: var(--muted); font-size: 13px; line-height: 1.6; margin: 0; flex: 1; }
-  .game-stats {
-    display: flex; gap: 14px; flex-wrap: wrap;
-    font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--muted-2);
-  }
-  .game-stats b { color: var(--ink); font-weight: 600; }
-  .game-card-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
-  .game-card-actions .btn { font-size: 12.5px; padding: 8px 14px; }
-  .game-status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 6px; }
-  .game-status-dot.released { background: var(--moss); }
-  .game-status-dot.in-progress { background: var(--amber); }
-  .game-status-dot.not-working {background: var(--danger);box-shadow: 0 0 6px var(--danger);}
-  .home-empty { padding: 40px 0; color: var(--muted); font-size: 13.5px; text-align: center; }
+.game-card p.note { color: var(--muted); font-size: 13px; line-height: 1.6; margin: 0; flex: 1; }
+.game-stats {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--muted-2);
+}
+.game-stats b { color: var(--ink); font-weight: 600; }
+.game-card-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.game-status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+.game-status-dot.released, .game-status-dot.working { background: var(--moss); }
+.game-status-dot.in-progress, .game-status-dot.updating { background: var(--amber); }
+.game-status-dot.not-working { background: var(--danger); box-shadow: 0 0 6px var(--danger); }
+.home-empty { padding: 40px 0; color: var(--muted); font-size: 13.5px; text-align: center; }
 </style>
 </head>
 <body>
 <div class="scan-overlay" aria-hidden="true"></div>
-<div class="scan-sweep" aria-hidden="true"></div>
 <div class="wrap">
 
   <header>
     <h1>AI-FREE</h1>
-    <!--<p class="sub"></p>--!>
     <div class="nav-tabs">
       <button class="btn tab active" id="tabHome" type="button">โปรเจกต์ทั้งหมด</button>
       <button class="btn tab" id="tabChecker" type="button">เช็คสถานะ</button>
-     <!-- <a class="btn" href="" target="_blank" rel="noopener" style="margin-left:auto;">เข้าดิสคอร์ด</a>--!>
     </div>
   </header>
 
@@ -915,54 +388,70 @@ body::after {
     <div class="home-empty" id="homeEmpty" style="display:none;"></div>
     <div class="field-note">
       <b>สถานะ —</b>
-	  🟢ปกติ  
-	  🟠กําลังอัปเดต~เเก้ไข  
-	  🔴ใช้งานไม่ได้
+       🟢ปกติ  
+       🟠กําลังอัปเดต~เเก้ไข  
+       🔴ใช้งานไม่ได้
     </div>
   </div>
-<div class="view" id="view-checker">
-  <div class="checker-container">
-    <h2 class="checker-title">รายการเช็คสถานะ(Status Checker)</h2>
-    
-    <div class="checker-list" id="checkerList">
-      <!-- แสดงผลรายการม็อดผ่าน JavaScript -->
+
+  <div class="view" id="view-checker">
+    <div class="checker-container">
+      <h2 class="checker-title">รายการเช็คสถานะ (Status Checker)</h2>
+      <div class="checker-list" id="checkerList"></div>
     </div>
   </div>
+
 </div>
 
 <script>
-// 1. ประกาศตัวแปรข้อมูลให้อยู่นอกฟังก์ชัน (หรืออยู่ด้านบนสุด)
-const STATUS_LABEL = {
-  'working': 'ใช้งานได้',
-  'not-working': 'ใช้งานไม่ได้',
-  'updating': 'กำลังอัปเดต'
-};
-
+// ข้อมูลโปรเจกต์ทั้งหมด (รวมตัวแปร GAMES ไว้ที่เดียว)
 const GAMES = [
   {
-    modTitle: "MeowMenu",
-    img: "https://example.com/icon.jpg", // ใส่ URL รูปไอคอนตรงนี้ (ถ้าไม่ใส่จะใช้รูป 🎮)
-    status: "working",
-
+    modTitle: "MeowMenu AI",
+    name: "MeowMenu:AI",
+    type: "BOT",
+    status: "released",
+    version: "0.0.1",
+    downloadUrl: "https://www.mediafire.com/file/cw742bcbgt4lhzu/Meow.rar/file",
+    downloadLabel: "Mediafire",
+    updated: "2026-10-10",
+    note: "BOT GAME FREE ระบบ Menu การศึกษา เเละ ความรู้ ไม่มี ไวร้ส หรือ Malware เป็นเเค่ BOT โปรเเกรมจําลองรองรับ LDPlayer | NoxPlayer | BlueStacks เข้าใช้งานเเละเทส KEY : KEYAUTH-uHTRoZ-7UnwQd "
+  },
+  {
+    modTitle: "かわいい猫 AI",
+    name: "かわいい猫:AI",
+    type: "BOT",
+    status: "released",
+    version: "0.1.0",
+    downloadUrl: "https://www.mediafire.com/file/8eurl30b5z40x7f/%25E3%2581%258B%25E3%2582%258F%25E3%2581%2584%25E3%2581%2584%25E7%258C%25AB.rar/file",
+    downloadLabel: "Mediafire",
+    updated: "2024-9-16",
+    note: "BOT GAME FREE ระบบ Console การศึกษา เเละ ความรู้ ไม่มี ไวร้ส หรือ Malware เป็นเเค่ BOT โปรเเกรมจําลองรองรับ NoxPlayer 32game เข้าใช้งานเเละเทส KEY : KEYAUTH-uHTRoZ-7UnwQd "
   }
 ];
 
+const STATUS_LABEL = { 
+  released: 'ปกติ', 
+  'in-progress': 'กําลังอัปเดตเเก้ไข', 
+  'not-working': 'ใช้งานไม่ได้',
+  working: 'ใช้งานได้',
+  updating: 'กำลังอัปเดต'
+};
+
+// 1. ฟังก์ชันเรนเดอร์หน้า Status Checker
 function renderCheckerList() {
   const checkerList = document.getElementById('checkerList');
   if (!checkerList) return;
 
-  // ตรวจสอบว่ามีข้อมูลใน GAMES หรือไม่
   if (!GAMES || !GAMES.length) {
     checkerList.innerHTML = '<div style="color: rgb(144, 167, 151);">ไม่มีข้อมูลรายการเช็คสถานะ</div>';
     return;
   }
 
   checkerList.innerHTML = GAMES.map(game => {
-    // กำหนดค่าสถานะ และข้อความป้ายสถานะ
-    const statusKey = STATUS_LABEL[game.status] ? game.status : 'not-working';
-    const statusLabel = STATUS_LABEL[statusKey] || 'ไม่ทราบสถานะ';
+    const statusKey = STATUS_LABEL[game.status] ? game.status : 'released';
+    const statusLabel = STATUS_LABEL[statusKey] || 'ปกติ';
 
-    // เลือกใช้รูปภาพ หรือไอคอนข้อความ 🎮
     const iconHtml = game.img 
       ? `<img src="${game.img}" alt="${game.modTitle || ''}" class="checker-icon">`
       : `<div class="checker-icon">🎮</div>`;
@@ -973,11 +462,14 @@ function renderCheckerList() {
           ${iconHtml}
           <div class="checker-info">
             <span class="checker-name">${game.modTitle || game.name || 'ไม่มีชื่อม็อด'}</span>
-            ${game.name ? `<span class="checker-eng">${game.name}</span>` : ''}
+            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+              ${game.name ? `<span class="checker-eng">${game.name}</span>` : ''}
+              ${game.type ? `<span style="font-size: 0.75rem; color: var(--blaze); background: var(--blaze-dim); padding: 1px 6px; border-radius: 4px;">${game.type}</span>` : ''}
+            </div>
           </div>
         </div>
         <div class="checker-right">
-          ${game.version ? `<span style="font-size: 0.8rem; color: rgb(144, 167, 151);">v${game.version}</span>` : ''}
+          ${game.version ? `<span class="game-badge version-rgb">v${game.version}</span>` : ''}
           <span class="game-badge ${statusKey}">${statusLabel}</span>
         </div>
       </div>
@@ -985,111 +477,74 @@ function renderCheckerList() {
   }).join('');
 }
 
-// เรียกให้ฟังก์ชันทำงานเมื่อสคริปต์โหลด
-renderCheckerList();
-</script>
-<script>
-(function(){
-  "use strict";
-
-  // ---------- tab switching ----------
-  const tabHome = document.getElementById('tabHome');
-  const tabChecker = document.getElementById('tabChecker');
-  const viewHome = document.getElementById('view-home');
-  const viewChecker = document.getElementById('view-checker');
-
-  function showView(name){
-    const home = name === 'home';
-    viewHome.classList.toggle('show', home);
-    viewChecker.classList.toggle('show', !home);
-    tabHome.classList.toggle('active', home);
-    tabChecker.classList.toggle('active', !home);
-  }
-  tabHome.addEventListener('click', ()=> showView('home'));
-  tabChecker.addEventListener('click', ()=> showView('checker'));
-
-  // ---------- game hub data ----------
-  // เพิ่มเกมใหม่: copy object ด้านล่างแล้วแก้ค่า ไม่ต้องแตะโค้ดส่วนอื่น
-  const GAMES = [
-    {
-      //name: "theHunter: Call of the Wild",
-      modTitle: "MeowMenu AI",
-      status: "released",
-	  version: "0.0.1",
-      downloadUrl: "https://www.mediafire.com/file/cw742bcbgt4lhzu/Meow.rar/file",
-      downloadLabel: "Mediafire",
-      updated: "2026-10-10",
-      //stats: { totalDls: 0 },
-      note: "BOT GAME FREE ระบบ Menu การศึกษา เเละ ความรู้ ไม่มี ไวร้ส หรือ Malware เป็นเเค่ BOT โปรเเกรมจําลองรองรับ LDPlayer | NoxPlayer | BlueStacks เข้าใช้งานเเละเทส KEY : KEYAUTH-uHTRoZ-7UnwQd "
-    },
-    {
-      //name: "theHunter: Call of the Wild",
-      modTitle: "かわいい猫 AI",
-      status: "released",
-	  version: "0.1.0",
-      downloadUrl: "https://www.mediafire.com/file/8eurl30b5z40x7f/%25E3%2581%258B%25E3%2582%258F%25E3%2581%2584%25E3%2581%2584%25E7%258C%25AB.rar/file",
-      downloadLabel: "Mediafire",
-      updated: "2024-9-16",
-      //stats: { totalDls: 0 },
-      note: "BOT GAME FREE ระบบ Console การศึกษา เเละ ความรู้ ไม่มี ไวร้ส หรือ Malware เป็นเเค่ BOT โปรเเกรมจําลองรองรับ NoxPlayer 32game เข้าใช้งานเเละเทส KEY : KEYAUTH-uHTRoZ-7UnwQd "
-    },
-  ];
-
-  const STATUS_LABEL = { released: 'ปกติ', 'in-progress': 'กําลังอัปเดตเเก้ไข', 'not-working': 'ใช้งานไม่ได้' };
-
-  function fmtNum(n){
-    if(n === null || n === undefined) return '—';
-    return n.toLocaleString('en-US');
-  }
-
-  function gameCardHtml(game){
-  const statusKey = STATUS_LABEL[game.status] ? game.status : 'not-working';
-    const statusLabel = STATUS_LABEL[statusKey];
-	
-    let statsHtml;
-    if(game.stats){
-      const s = game.stats;
-      statsHtml = `<div class="game-stats">
-        <span><span class="game-status-dot ${statusKey}"></span>ดาวน์โหลด <b>${fmtNum(s.totalDls)}</b></span>
-        <span>เข้าชม <b>${fmtNum(s.views)}</b></span>   
-      </div>`;
-    } else {
-      statsHtml = `<div class="game-stats"><span><span class="game-status-dot ${statusKey}"></span>อัปเดตล่าสุด <b>${game.updated || '—'}</b></span></div>`;
-    }
-
-    let actionsHtml = '';
-    if(game.downloadUrl){
-const currentStatus = game.status || 'released'; actionsHtml += `<a class="btn primary ${currentStatus}" href="${game.downloadUrl}" target="_blank" rel="noopener">ดาวน์โหลด${game.downloadLabel ? ' · ' + game.downloadLabel : ''}</a>`;
-    }
-    if(game.discordUrl){
-      actionsHtml += `<a class="btn" href="${game.discordUrl}" target="_blank" rel="noopener">ติดตามในดิสคอร์ด</a>`;
-    }
-
-    return `<div class="game-card hud-frame">
-      <div class="game-card-top">
-        <div>
-          <div class="game-card-eng">${game.name}</div>
-          <h2>${game.modTitle || game.name}</h2>
-        </div>
-      <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 4px;"><span class="game-badge ${statusKey}">${statusLabel}</span>${game.version ? `<span class="game-badge version-rgb">v${game.version}</span>` : ''}
-     </div>
-      </div>
-      <p class="note">${game.note || ''}</p>
-      ${statsHtml}
-      <div class="game-card-actions">${actionsHtml}</div>
-    </div>`;
-  }
-
+// 2. ฟังก์ชันเรนเดอร์หน้าโปรเจกต์หลัก (Home) - แสดงทั้ง type และ updated
+function renderGameGrid() {
   const grid = document.getElementById('gameGrid');
   const empty = document.getElementById('homeEmpty');
-  if(!GAMES.length){
+  if (!grid) return;
+
+  if (!GAMES.length) {
     empty.style.display = 'block';
     empty.textContent = 'ยังไม่มีข้อมูลเกม';
-  } else {
-    grid.innerHTML = GAMES.map(gameCardHtml).join('');
+    return;
   }
 
-})();
+  grid.innerHTML = GAMES.map(game => {
+    const statusKey = STATUS_LABEL[game.status] ? game.status : 'released';
+    const statusLabel = STATUS_LABEL[statusKey] || 'ปกติ';
+
+    // แสดงทั้ง type และ updated
+    let statsHtml = `
+      <div class="game-stats" style="display: flex; flex-direction: column; gap: 4px;">
+        ${game.type ? `<span>ประเภท: <b>${game.type}</b></span>` : ''}
+        <span><span class="game-status-dot ${statusKey}"></span>อัปเดตล่าสุด <b>${game.updated || '—'}</b></span>
+      </div>
+    `;    
+
+    let actionsHtml = '';
+    if (game.downloadUrl) {
+      actionsHtml += `<a class="btn primary ${statusKey}" href="${game.downloadUrl}" target="_blank" rel="noopener">ดาวน์โหลด${game.downloadLabel ? ' · ' + game.downloadLabel : ''}</a>`;
+    }
+
+    return `
+      <div class="game-card hud-frame">
+        <div class="game-card-top">
+          <div>
+            <div class="game-card-eng">${game.name || ''}</div>
+            <h2>${game.modTitle || game.name}</h2>
+          </div>
+          <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+            <span class="game-badge ${statusKey}">${statusLabel}</span>
+            ${game.version ? `<span class="game-badge version-rgb">v${game.version}</span>` : ''}
+          </div>
+        </div>
+        <p class="note">${game.note || ''}</p>
+        ${statsHtml}
+        <div class="game-card-actions">${actionsHtml}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ระบบสลับหน้า (Tabs)
+const tabHome = document.getElementById('tabHome');
+const tabChecker = document.getElementById('tabChecker');
+const viewHome = document.getElementById('view-home');
+const viewChecker = document.getElementById('view-checker');
+
+function showView(name){
+  const home = name === 'home';
+  viewHome.classList.toggle('show', home);
+  viewChecker.classList.toggle('show', !home);
+  tabHome.classList.toggle('active', home);
+  tabChecker.classList.toggle('active', !home);
+}
+
+tabHome.addEventListener('click', () => showView('home'));
+tabChecker.addEventListener('click', () => showView('checker'));
+
+renderGameGrid();
+renderCheckerList();
 </script>
 </body>
 </html>
