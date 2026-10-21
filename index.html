@@ -255,6 +255,19 @@ h1 {
   color: #17110C;
 }
 
+.platform-badges {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.platform-label {
+  font-size: 14px;
+  color: #a0aec0; /* สีตัวอักษร "Supports:" ปรับได้ตามชอบ */
+  margin-right: 2px;
+}
+
 .btn.primary:hover {
   background: linear-gradient(135deg, #ff0055, #9d00ff, #ff6600, #ccff00, #ff0055);
   background-size: 300% 300%;
@@ -398,7 +411,7 @@ h1 {
 
   <div class="view" id="view-checker">
     <div class="checker-container">
-      <h2 class="checker-title">รายการเช็คสถานะ (Status Checker)</h2>
+      <h2 class="checker-title">รายการเช็คสถานะ (Status Checker)|Supports(Windows)</h2>
       <div class="checker-list" id="checkerList"></div>
     </div>
   </div>
@@ -408,21 +421,336 @@ h1 {
 <script>
 const CHECKER_GAMES = [
   {
-    name: "TLauncher",
-    status: "not-working",
-    version: "0.0.0"
+    name: "Astral Fable",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
   },
   {
-    name: "Genshin Impact",
-    status: "not-working",
-    version: "0.0.0"
+    name: "Musou Glory",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
   },
   {
-    name: "NoxPlayer",
+    name: "Soul Destiny",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Tales of Gaia",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "The Legend of Neverland",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Tales of Wind",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Yulgang Mobile",
     status: "not-working",
-    version: "0.0.0"
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Gray Raven",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Rox",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Tower of Fantasy",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["64bit"]
+  },
+  {
+    name: "V4",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Laplace M",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Moonlight Blade",
+    status: "not-working",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["64bit"]
+  },
+  {
+    name: "Attack On Moe H",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Ragnarok M",
+    status: "not-working",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Real Yulgang Mobile",
+    status: "not-working",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Never After",
+    status: "not-working",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Prinal Chaos",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Black Desert Mobile",
+    status: "not-working",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["64bit"]
+  },
+  {
+    name: "Dragon Hunters",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Dragon Raja",
+    status: "not-working",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Ni no Kuni Cross Worlds",
+    status: "not-working",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["64bit"]
+  },
+  {
+    name: "Piano Fire",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Magic Tiles 3",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "LcarusM",
+    status: "not-working",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Flyff Legacy Global",
+    status: "not-working",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Forlands",
+    status: "not-working",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Silkroad Online",
+    status: "not-working",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Nine Songs of Fantasy",
+    status: "not-working",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Last Island Of Survival",
+    status: "released",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Ragnarok Origin Global",
+    status: "not-working",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
+  },
+  {
+    name: "Neverland",
+    status: "not-working",
+    version: "0.0.1",
+    platforms: ["NoxPlayer"],
+    bit: ["32bit", "64bit"]
   }
 ];
+
+// 1. ฟังก์ชันเรนเดอร์หน้า Status Checker
+function renderCheckerList() {
+  const checkerList = document.getElementById('checkerList');
+  if (!checkerList) return;
+
+  if (!CHECKER_GAMES || !CHECKER_GAMES.length) {
+    checkerList.innerHTML = '<div style="color: rgb(144, 167, 151);">ไม่มีข้อมูลรายการเช็คสถานะ</div>';
+    return;
+  }
+
+  checkerList.innerHTML = CHECKER_GAMES.map(game => {
+    const statusKey = STATUS_LABEL[game.status] ? game.status : 'released';
+    const statusLabel = STATUS_LABEL[statusKey] || 'ปกติ';
+
+    const iconHtml = game.img 
+      ? `<img src="${game.img}" alt="${game.name || ''}" class="checker-icon">`
+      : `<div class="checker-icon">🎮</div>`;
+    
+    // บรรทัดบน: แสดงแพลตฟอร์ม (Supports: NoxPlayer)
+    const platformsHtml = game.platforms && game.platforms.length > 0
+      ? `<div class="platform-badges">
+          <span class="platform-label">Supports:</span>
+          ${game.platforms.map(platform => `<span class="game-badge version-rgb">${platform}</span>`).join('')}
+         </div>`
+      : '';
+
+    // บรรทัดล่าง: แสดงสถาปัตยกรรม bit (รองรับ 32bit, 64bit)
+    const bitHtml = game.bit && game.bit.length > 0
+      ? `<div class="platform-badges">
+          <span class="platform-label">รองรับ</span>
+          ${game.bit.map(b => `<span class="game-badge version-rgb">${b}</span>`).join('')}
+         </div>`
+      : '';
+
+    return `
+      <div class="checker-item">
+        <div class="checker-left">
+          ${iconHtml}
+          <div class="checker-info">
+            <span class="checker-name">${game.name || 'ไม่มีชื่อ'}</span>
+            ${platformsHtml}
+            ${bitHtml}
+          </div>
+        </div>
+        <div class="checker-right">
+          ${game.version ? `<span class="game-badge version-rgb">v${game.version}</span>` : ''}
+          <span class="game-badge ${statusKey}">${statusLabel}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// 1. ฟังก์ชันเรนเดอร์หน้า Status Checker
+function renderCheckerList() {
+  const checkerList = document.getElementById('checkerList');
+  if (!checkerList) return;
+
+  if (!CHECKER_GAMES || !CHECKER_GAMES.length) {
+    checkerList.innerHTML = '<div style="color: rgb(144, 167, 151);">ไม่มีข้อมูลรายการเช็คสถานะ</div>';
+    return;
+  }
+
+  checkerList.innerHTML = CHECKER_GAMES.map(game => {
+    const statusKey = STATUS_LABEL[game.status] ? game.status : 'released';
+    const statusLabel = STATUS_LABEL[statusKey] || 'ปกติ';
+
+    const iconHtml = game.img 
+      ? `<img src="${game.img}" alt="${game.name || ''}" class="checker-icon">`
+      : `<div class="checker-icon">🎮</div>`;
+    
+    // บรรทัดบน: แสดงแพลตฟอร์ม (Supports: NoxPlayer)
+    const platformsHtml = game.platforms && game.platforms.length > 0
+      ? `<div class="platform-badges">
+          <span class="platform-label">Supports:</span>
+          ${game.platforms.map(platform => `<span class="game-badge version-rgb">${platform}</span>`).join('')}
+         </div>`
+      : '';
+
+    // บรรทัดล่าง: แสดงสถาปัตยกรรม bit (รองรับ 32bit, 64bit)
+    const bitHtml = game.bit && game.bit.length > 0
+      ? `<div class="platform-badges">
+          <span class="platform-label">รองรับ</span>
+          ${game.bit.map(b => `<span class="game-badge version-rgb">${b}</span>`).join('')}
+         </div>`
+      : '';
+
+    return `
+      <div class="checker-item">
+        <div class="checker-left">
+          ${iconHtml}
+          <div class="checker-info">
+            <span class="checker-name">${game.name || 'ไม่มีชื่อ'}</span>
+            ${platformsHtml}
+            ${bitHtml}
+          </div>
+        </div>
+        <div class="checker-right">
+          ${game.version ? `<span class="game-badge version-rgb">v${game.version}</span>` : ''}
+          <span class="game-badge ${statusKey}">${statusLabel}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
 // ข้อมูลโปรเจกต์ทั้งหมด (รวมตัวแปร GAMES ไว้ที่เดียว)
 const GAMES = [
   {
@@ -474,6 +802,22 @@ function renderCheckerList() {
     const iconHtml = game.img 
       ? `<img src="${game.img}" alt="${game.name || ''}" class="checker-icon">`
       : `<div class="checker-icon">🎮</div>`;
+    
+
+    const platformsHtml = game.platforms && game.platforms.length > 0
+      ? `<div class="platform-badges">
+          <span class="platform-label">GameSupports:</span>
+          ${game.platforms.map(platform => `<span class="game-badge version-rgb">${platform}</span>`).join('')}
+         </div>`
+      : '';
+
+
+    const bitHtml = game.bit && game.bit.length > 0
+      ? `<div class="platform-badges">
+          <span class="platform-label">Game:</span>
+          ${game.bit.map(b => `<span class="game-badge version-rgb">${b}</span>`).join('')}
+         </div>`
+      : '';
 
     return `
       <div class="checker-item">
@@ -481,6 +825,8 @@ function renderCheckerList() {
           ${iconHtml}
           <div class="checker-info">
             <span class="checker-name">${game.name || 'ไม่มีชื่อ'}</span>
+            ${platformsHtml}
+            ${bitHtml}
           </div>
         </div>
         <div class="checker-right">
